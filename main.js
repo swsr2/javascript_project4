@@ -134,6 +134,7 @@ const search = async () => {
 
             render(weatherData); // Render the weather for the searched location
         } else {
+            alert("Location not found")
             console.log("Location not found.");
         }
     } catch (error) {
