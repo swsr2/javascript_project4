@@ -49,22 +49,27 @@ const renderFirstPage  = (data) => {
     const daily = data.daily || [];
     let timezone = data.timezone.split("/")[1];
 
-    // 시간별 날씨(최대5시간)
+    // 시간별 날씨(최대10시간)
     const hourlyForecastHTML = hourly
-        .filter((hour) => {
-            const currentTime = Date.now() / 1000;
-            const maxFutureTime = currentTime + 5 * 3600;
-            return hour.dt >= currentTime && hour.dt <= maxFutureTime;
-        })
-        .map((hour) => {
-            const date = new Date(hour.dt * 1000);
-            const formattedTime = date.getHours() < 10 ? `0${date.getHours()}시` : `${date.getHours()}시`;
-            return `<div class="hour">
-                        <span>${formattedTime}</span>
-                        <span>${Math.round(hour.temp)}°</span>
-                    </div>`;
-        })
-        .join("");
+    .filter((hour) => {
+        const currentTime = Date.now() / 1000;
+        const maxFutureTime = currentTime + 10 * 3600;
+        return hour.dt >= currentTime && hour.dt <= maxFutureTime;
+    })
+    .map((hour) => {
+        const date = new Date(hour.dt * 1000);
+        let formattedTime = date.getHours();
+        const ampm = formattedTime >= 12 ? 'PM' : 'AM';
+        formattedTime = formattedTime % 12 || 12; // Convert hour to 12-hour format
+        const formattedHour = formattedTime < 10 ? `0${formattedTime}` : `${formattedTime}`;
+        
+        return `<div class="hour">
+                <span>${formattedHour} ${ampm}</span>
+                <span>${Math.round(hour.temp)}°</span>
+                </div>`;
+    })
+    .join("");
+
 
     // 일별 예측 표시
     const dailyForecastHTML = daily
