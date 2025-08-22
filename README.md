@@ -1,6 +1,8 @@
-# 간단한 JavaScript 프로젝트
+# 간단한 닐씨 웹 프로젝트
 
 이 프로젝트는 HTML, CSS, JavaScript를 사용하여 만들어진 간단한 웹 애플리케이션입니다.
+
+배포링크: https://weatheappbysr.netlify.app/
 
 ## 파일 구성
 
